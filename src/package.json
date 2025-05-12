@@ -1,0 +1,20 @@
+{
+  "name": "simple-browser-history",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "supervisor -w . -n error -- index.js"
+  },
+  "author": "kuilin",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mariadb": "^3.3.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "supervisor": "^0.12.0"
+  }
+}

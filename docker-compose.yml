@@ -1,0 +1,30 @@
+services:
+  web:
+    image: node:24-alpine3.20
+    volumes:
+     - .:/app
+    restart: always
+    working_dir: /app/src
+    command: "sh -c 'yarn && yarn start'"
+    ports:
+      - 0.0.0.0:13131:3000
+  db:
+    image: mariadb:11.3.2-jammy
+    volumes:
+      - ./mariadb:/var/lib/mysql:Z
+      - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql:ro
+    restart: always
+    environment:
+      MARIADB_DATABASE: browserhistory
+      MARIADB_USER: web
+      MARIADB_PASSWORD: web
+      MARIADB_ROOT_PASSWORD: password
+  adminer:
+    image: adminer:5-standalone
+    environment:
+      ADMINER_PLUGINS: adminer-bypass
+    volumes:
+      - ./adminer-bypass.php:/var/www/html/plugins/adminer-bypass.php:ro
+    restart: always
+    ports:
+      - 127.0.0.1:13132:8080
