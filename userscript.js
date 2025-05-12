@@ -17,7 +17,13 @@
     let navid = "new";
     const tick = () => {
         const data = {navid, url: document.location.href, title: document.title};
-        if (navid === "new") data.tzname = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        if (navid === "new") {
+            // only set tzname on first tick
+            data.tzname = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        } else {
+            // skip if no focus on subsequent ticks
+            if (!document.hasFocus()) return;
+        }
 
         GM_xmlhttpRequest({
             method: "POST",
